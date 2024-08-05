@@ -17,6 +17,9 @@ const wallet = new ethers.Wallet(burnerKey,provider);
 const nftContract = new ethers.Contract(skibAddress,skibAbi,wallet);
 const totalSupply = 3456;
 // Function to get balance and save to JSON
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 async function recordHolders() {
   try {
     let holders = {};
@@ -30,6 +33,7 @@ async function recordHolders() {
   
         holders[owner].totalNfts += 1;
         holders[owner].ownedIds.push(tokenId);
+        await delay(26);
       }
       fs.writeFileSync(balanceFilePath, JSON.stringify({}, null, 2));
       fs.writeFileSync(balanceFilePath, JSON.stringify(holders, null, 2));
@@ -40,7 +44,7 @@ async function recordHolders() {
 }
 
 // Schedule the task to run every 8 hours using setInterval
-setInterval(()=>{recordHolders()}, 480 * 1000);
+setInterval(()=>{recordHolders()}, 720 * 60 * 1000);
 
 recordHolders();
 
