@@ -2,11 +2,13 @@ const express = require('express');
 const ethers = require('ethers');
 const dotenv = require('dotenv');
 const fs = require('fs');
+const cors = require('cors');
 const Skib = require("./Utils/SKIBBIDIESOFBITCOIN.json");
 
 dotenv.config();
 
 const app = express();
+app.use(cors())
 const port = process.env.PORT || 5000;
 const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
 const balanceFilePath = './db/holders.json';
